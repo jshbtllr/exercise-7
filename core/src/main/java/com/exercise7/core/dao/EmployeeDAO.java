@@ -198,34 +198,36 @@ public class EmployeeDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			DetachedCriteria minGWA = DetachedCriteria.forClass(Employee.class)
-				.setProjection(Property.forName("gradeWeightAverage").min());
-			criteria = session.createCriteria(Employee.class);
-			ProjectionList projectionList = Projections.projectionList();
-			if(option == 1) {
-				System.out.print("Minimmum GWA of All Registered employee is ");
-				//query = session.createQuery("SELECT a.firstName, a.lastName, a.gradeWeightAverage FROM Employee a where a.gradeWeightAverage = (SELECT min(b.gradeWeightAverage) FROM Employee b)");
-				
+
+			if(option != 3) {
+				criteria = session.createCriteria(Employee.class);
+				ProjectionList projectionList = Projections.projectionList();
 				projectionList.add(Projections.property("firstName"));
 				projectionList.add(Projections.property("lastName"));
 				projectionList.add(Projections.property("gradeWeightAverage"));
 				criteria.setProjection(projectionList);
-				criteria.add(Property.forName("gradeWeightAverage").eq(minGWA));
-				//criteria.setProjection(Projections.min("gradeWeightAverage"));
 
-			} else if(option == 2) {
-				System.out.print("Maximum GWA of All Registered employee is ");
-				query = session.createQuery("SELECT max(gradeWeightAverage) FROM Employee");
+				DetachedCriteria gwa = DetachedCriteria.forClass(Employee.class);
+				
+				if(option == 1) {
+					System.out.print("Employee with the lowest GWA is ");
+					gwa.setProjection(Property.forName("gradeWeightAverage").min());
+					criteria.add(Property.forName("gradeWeightAverage").eq(gwa));
+
+				} else if(option == 2) {
+					System.out.print("Employee with the highest GWA is ");
+					gwa.setProjection(Property.forName("gradeWeightAverage").max());
+					criteria.add(Property.forName("gradeWeightAverage").eq(gwa));
+				}
+
+				List <Object []> test = criteria.list();
+				for(Object [] employee : test) {
+					System.out.println(employee[0] + " " +  employee[1] + " with " + employee[2] + " GWA.");
+				}
 			} else {
 				System.out.print("Average GWA of All Registered employee is ");
 				query = session.createQuery("SELECT avg(gradeWeightAverage) FROM Employee");
-			}
-
-
-
-			List <Object []> test = criteria.list();
-			for(Object [] employee : test) {
-				System.out.println(employee[0] + " " +  employee[1] + " " + employee[2]);
+				System.out.println(query.list().get(0));
 			}
 		} catch(HibernateException he) {
 			if (transaction != null)  {
