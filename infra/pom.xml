@@ -1,0 +1,33 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exercise6</groupId>
+		<artifactId>EmployeeRegistrationSystem</artifactId>
+		<version>1.0.1</version>
+	</parent>
+
+	<groupId>com.exercise6.infra</groupId>
+	<artifactId>infra</artifactId>
+	<version>${parent-version}</version>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+        	<resource>
+            	<directory>src/main/java</directory>
+            	<filtering>true</filtering>
+            	<includes>
+               		<include>**/*.xml</include>
+            	</includes>
+        	</resource>
+    	</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+		</plugins>		
+	</build>
+</project>
