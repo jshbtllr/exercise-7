@@ -1,37 +1,36 @@
-package com.exercise6.core.service;
-import com.exercise6.core.model.ContactInfo;
-import com.exercise6.core.model.Employee;
-import com.exercise6.util.InputUtil;
-import com.exercise6.core.dao.EmployeeDAO;
+package com.exercise7.core.service;
+import com.exercise7.core.model.ContactInfo;
+import com.exercise7.core.model.Employee;
+import com.exercise7.util.InputUtil;
+import com.exercise7.core.dao.EmployeeDAO;
 import java.util.Set;
 import java.util.Iterator;
-import org.hibernate.SessionFactory;
 
 public class ContactInfoService {
-	public static void addContactInfo(SessionFactory sessionFactory) {
+	public static void addContactInfo() {
 		String infoType = null;
 		Employee employee = null;
 		Set <ContactInfo> contacts;
 
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+		EmployeeService.listEmployees(4, 0);
 		System.out.print("Add contact info to which employee: ");
 		Long employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
 		contacts = employee.getContactInfo();	
 
-		contacts = addContactSet(sessionFactory, contacts, employee);
+		contacts = addContactSet(contacts, employee);
 		employee.setContactInfo(contacts);
-		EmployeeDAO.updateEmployee(sessionFactory, employee);
+		EmployeeDAO.updateEmployee(employee);
 	}
 
 
-	public static Set <ContactInfo> addContactSet(SessionFactory sessionFactory, Set <ContactInfo> contacts, Employee employee) {	
+	public static Set <ContactInfo> addContactSet(Set <ContactInfo> contacts, Employee employee) {	
 		Long contactId = null;
 		Boolean exist = false;
 		System.out.println("Add Contact Information: ");
@@ -93,8 +92,8 @@ public class ContactInfoService {
 		return addInfo;		
 	}
 
-	public static void removeContactInfo(SessionFactory sessionFactory) {
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+	public static void removeContactInfo() {
+		EmployeeService.listEmployees(4, 0);
 		Long employeeId;
 		Long contactId;
 		Employee employee;
@@ -106,12 +105,12 @@ public class ContactInfoService {
 		System.out.print("Delete a contact info from which employee: ");
 		employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
 		contacts = employee.getContactInfo();
 
 		System.out.print("Employee has ");
@@ -132,8 +131,7 @@ public class ContactInfoService {
 			while(iterator.hasNext()) {
 				if(deleteInfo.getId().equals(iterator.next().getId())) {
 					exist = true;
-					EmployeeDAO.deleteContactInfo(sessionFactory, employeeId, contactId);	
-					iterator.remove();
+					EmployeeDAO.deleteContactInfo(contactId);	
 				}
 			}
 
@@ -143,13 +141,10 @@ public class ContactInfoService {
 		} else {
 			System.out.println("no Contact Info to delete");
 		}
-
-		employee.setContactInfo(contacts);
-		EmployeeDAO.updateEmployee(sessionFactory, employee);
 	}
 
-	public static void updateContactInfo(SessionFactory sessionFactory) {
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+	public static void updateContactInfo() {
+		EmployeeService.listEmployees(4, 0);
 		Long employeeId;
 		Long contactId;
 		Employee employee;
@@ -159,16 +154,16 @@ public class ContactInfoService {
 		Set <ContactInfo> contacts = null;
 		Iterator <ContactInfo> iterator = null;		
 
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+		EmployeeService.listEmployees(4, 0);
 		System.out.print("Add contact info to which employee: ");
 		employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
 		contacts = employee.getContactInfo();
 
 		System.out.print("Employee has ");
@@ -205,7 +200,7 @@ public class ContactInfoService {
 			}
 
 			employee.setContactInfo(contacts);
-			EmployeeDAO.updateEmployee(sessionFactory, employee);
+			EmployeeDAO.updateEmployee(employee);
 
 			if(!exist) {
 				System.out.println("Contact ID not assigned to employee");
@@ -216,20 +211,20 @@ public class ContactInfoService {
 		}		
 	}
 
-	public static void listContactInfo(SessionFactory sessionFactory) {
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+	public static void listContactInfo() {
+		EmployeeService.listEmployees(4, 0);
 		Long employeeId;
 		Employee employee = null;
 		Set <ContactInfo> contacts = null;
 		System.out.print("Show Contact Information of which EmployeeId: ");
 		employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}			
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);	
+		employee = EmployeeDAO.getEmployee(employeeId);	
 		contacts = employee.getContactInfo();
 
 		if(!contacts.isEmpty()) {

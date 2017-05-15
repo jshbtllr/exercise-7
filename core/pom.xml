@@ -3,23 +3,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.exercise6</groupId>
+		<groupId>com.exercise7</groupId>
 		<artifactId>EmployeeRegistrationSystem</artifactId>
 		<version>1.0.1</version>
 	</parent>
 
-	<groupId>com.exercise6.core</groupId>
+	<groupId>com.exercise7.core</groupId>
 	<artifactId>core</artifactId>
 	<version>${parent-version}</version>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.exercise6.util</groupId>
+			<groupId>com.exercise7.util</groupId>
 			<artifactId>util</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.exercise6.infra</groupId>
+			<groupId>com.exercise7.infra</groupId>
 			<artifactId>infra</artifactId>
 		</dependency>
 	</dependencies>

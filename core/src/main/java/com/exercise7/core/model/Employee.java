@@ -1,4 +1,4 @@
-package com.exercise6.core.model;
+package com.exercise7.core.model;
 
 import java.util.Set;
 import java.util.Date;

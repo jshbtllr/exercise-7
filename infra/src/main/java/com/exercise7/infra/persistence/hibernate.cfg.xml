@@ -29,8 +29,8 @@
 			${hibernate-show-sql}
 		</property>
 		
-		<mapping resource="com/exercise6/infra/persistence/Employee.hbm.xml"/>
-		<mapping resource="com/exercise6/infra/persistence/Roles.hbm.xml"/>
-		<mapping resource="com/exercise6/infra/persistence/ContactInfo.hbm.xml"/>
+		<mapping resource="com/exercise7/infra/persistence/Employee.hbm.xml"/>
+		<mapping resource="com/exercise7/infra/persistence/Roles.hbm.xml"/>
+		<mapping resource="com/exercise7/infra/persistence/ContactInfo.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

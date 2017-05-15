@@ -3,18 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.exercise6</groupId>
+		<groupId>com.exercise7</groupId>
 		<artifactId>EmployeeRegistrationSystem</artifactId>
 		<version>1.0.1</version>
 	</parent>
 
-	<groupId>com.exercise6.app</groupId>
+	<groupId>com.exercise7.app</groupId>
 	<artifactId>app</artifactId>
 	<version>${parent-version}</version>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.exercise6.core</groupId>
+			<groupId>com.exercise7.core</groupId>
 			<artifactId>core</artifactId>
 		</dependency>
 

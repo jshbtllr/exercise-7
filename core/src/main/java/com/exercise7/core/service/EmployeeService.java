@@ -1,25 +1,24 @@
-package com.exercise6.core.service;
-import com.exercise6.core.model.Roles;
-import com.exercise6.core.model.Address;
-import com.exercise6.core.model.ContactInfo;
-import com.exercise6.core.model.Employee;
-import com.exercise6.util.InputUtil;
-import com.exercise6.core.dao.RoleDAO;
-import com.exercise6.core.dao.EmployeeDAO;
-import com.exercise6.core.service.EmployeeRoleService;
-import com.exercise6.core.service.ContactInfoService;
+package com.exercise7.core.service;
+import com.exercise7.core.model.Roles;
+import com.exercise7.core.model.Address;
+import com.exercise7.core.model.ContactInfo;
+import com.exercise7.core.model.Employee;
+import com.exercise7.util.InputUtil;
+import com.exercise7.core.dao.RoleDAO;
+import com.exercise7.core.dao.EmployeeDAO;
+import com.exercise7.core.service.EmployeeRoleService;
+import com.exercise7.core.service.ContactInfoService;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import org.hibernate.SessionFactory;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class EmployeeService {
-	public static void createEmployee(SessionFactory sessionFactory) {
+	public static void createEmployee() {
 		String lastName;
 		String firstName;
 		String middleName;
@@ -90,7 +89,7 @@ public class EmployeeService {
 			System.out.print("Choose an option: ");
 			option = InputUtil.inputOptionCheck(2);
 			if(option == 1) {
-				role = EmployeeRoleService.addRoleSet(sessionFactory, role);
+				role = EmployeeRoleService.addRoleSet(role);
 			}
 		} while(option == 1);
 
@@ -104,16 +103,18 @@ public class EmployeeService {
 			option = InputUtil.inputOptionCheck(2);		
 			
 			if(option!= 2){
-				contacts = ContactInfoService.addContactSet(sessionFactory, contacts, employee);
+				contacts = ContactInfoService.addContactSet(contacts, employee);
 				employee.setContactInfo(contacts);
 			}
 		} while(option!= 2);
 
-		EmployeeDAO.addEmployee(sessionFactory, employee);
+		EmployeeDAO.addEmployee(employee);
 	}
 
-	public static void listEmployees(SessionFactory sessionFactory, Integer sortFunction, Integer orderFunction) {
-		List <Employee> list = EmployeeDAO.showEmployees(sessionFactory, sortFunction, orderFunction);
+	public static void listEmployees(Integer sortFunction, Integer orderFunction) {
+		List <Employee> list = EmployeeDAO.showEmployees(sortFunction, orderFunction);
+		Set <Roles> roles;
+		Set <ContactInfo> contacts;
 		if(!list.isEmpty()) {
 			if(sortFunction == 2) {
 				Collections.sort(list, new gwaComparator());
@@ -140,6 +141,32 @@ public class EmployeeService {
 						System.out.println("Employed:   No");
 						System.out.println("Hire Date:  " + "N/A");
 					}
+
+					roles = employee.getRole();
+					contacts = employee.getContactInfo();
+
+					if(roles.size() == 0) {
+						System.out.println("--------------------");
+						System.out.println("There are currently no roles assigned to employee");
+					} else {
+						for(Roles assigned : roles) {
+							System.out.println("--------------------");
+							System.out.println("Role Code: " + assigned.getRoleCode());
+							System.out.println("Role Name: " + assigned.getRoleName());
+						}
+					}
+
+					if(contacts.size() == 0) {
+						System.out.println("--------------------");
+						System.out.println("There are currently no contact info assigned to employee");
+					} else {
+						for(ContactInfo infos : contacts ) {
+							System.out.println("--------------------");
+							System.out.println("Info Type: " + infos.getInfoType());
+							System.out.println("Info Detail: " + infos.getInfoDetail());
+						}
+					}
+
 				}
 				System.out.println("-------------------------------------------------------------------\n");
 			}
@@ -148,21 +175,24 @@ public class EmployeeService {
 		}	
 	}	
 
-	public static void deleteEmployee(SessionFactory sessionFactory) {
+	public static void deleteEmployee() {
+		Employee employee = new Employee();
 		System.out.println("Delete Employee");
-		listEmployees(sessionFactory, 4, 1);
+		listEmployees(4, 1);
 		System.out.print("Enter the Employee ID to be deleted: ");
 		Long employeeId = InputUtil.inputOptionCheck().longValue();
 		
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		EmployeeDAO.deleteEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
+
+		EmployeeDAO.deleteEmployee(employee);
 	}
 
-	public static void updateEmployee(SessionFactory sessionFactory) {
+	public static void updateEmployee() {
 		String lastName = new String();
 		String firstName = new String();
 		String middleName = new String();
@@ -181,16 +211,16 @@ public class EmployeeService {
 		Set <Roles> role = new HashSet <Roles>();
 
 		System.out.println("Update Employee");
-		listEmployees(sessionFactory, 4, 0);
+		listEmployees(4, 0);
 		System.out.print("Choose Employee ID to be updated: ");
 		Long employeeId = InputUtil.inputOptionCheck().longValue();
 		
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a valid Employee ID: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		Employee employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		Employee employee = EmployeeDAO.getEmployee(employeeId);
 
 		System.out.println("Update Employee: ");
 		System.out.println("[1]    Full Name");
@@ -247,7 +277,7 @@ public class EmployeeService {
 				}
 			}	
 		}
-		EmployeeDAO.updateEmployee(sessionFactory, employee);
+		EmployeeDAO.updateEmployee(employee);
 	}
 }
 

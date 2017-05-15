@@ -1,4 +1,4 @@
-package com.exercise6.util;
+package com.exercise7.util;
 import java.util.Scanner;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -61,7 +61,10 @@ public class InputUtil {
 
 		while(true) {
 			if(output.isEmpty()) {
-				System.out.print("Input is blank. Input another value: ");
+				System.out.print("Input is blank.\nInput another value: ");
+				output = userInput.nextLine();
+			} else if(output.length() > 255)  {
+				System.out.print("Input can only be 255 characters long.\nInput another value: ");
 				output = userInput.nextLine();
 			} else {
 				break;
@@ -74,6 +77,14 @@ public class InputUtil {
 		Scanner userInput = new Scanner(System.in);
 		String output = userInput.nextLine();
 
+		while(true) {
+			if(output.length() > 255) {
+				System.out.print("Input can only be 255 characters long.\nInput another value: ");
+				output = userInput.nextLine();				
+			} else {
+				break;
+			}
+		}
 		return output;	
 	}
 
@@ -138,8 +149,10 @@ public class InputUtil {
 			try{
 				grade = Float.parseFloat(input);
 				
-				if ((grade <= 0)) {
-					System.out.print("Input invalid. Choose another: ");
+				if ((grade < 1) || grade > 5) {
+					System.out.print("Grade is invalid. Input a valid GWA from 1 to 5: ");
+				} else if (input.length() > 6) {
+					System.out.print("Grade should only have at most 4 decimal places.\nInput a valid GWA: ");
 				} else {
 					break;
 				}
@@ -152,9 +165,3 @@ public class InputUtil {
 		return grade;
 	}	
 }
-
-
-
-
-
-

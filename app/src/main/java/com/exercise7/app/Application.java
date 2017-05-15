@@ -1,12 +1,12 @@
-package com.exercise6.app;
-import com.exercise6.util.InputUtil;
-import com.exercise6.core.service.EmployeeService;
-import com.exercise6.core.service.RoleService;
-import com.exercise6.core.service.ContactInfoService;
-import com.exercise6.core.service.EmployeeRoleService;
-import com.exercise6.core.dao.EmployeeDAO;
-import com.exercise6.core.model.Roles;
-import com.exercise6.util.HibernateUtil;
+package com.exercise7.app;
+import com.exercise7.util.InputUtil;
+import com.exercise7.core.service.EmployeeService;
+import com.exercise7.core.service.RoleService;
+import com.exercise7.core.service.ContactInfoService;
+import com.exercise7.core.service.EmployeeRoleService;
+import com.exercise7.core.dao.EmployeeDAO;
+import com.exercise7.core.model.Roles;
+import com.exercise7.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 
 public class Application {
@@ -35,13 +35,13 @@ public class Application {
 
 			switch (function) {
 				case "1":
-					EmployeeService.createEmployee(sessionFactory);
+					EmployeeService.createEmployee();
 					break;
 				case "2":
-					EmployeeService.deleteEmployee(sessionFactory);
+					EmployeeService.deleteEmployee();
 					break;
 				case "3":
-					EmployeeService.updateEmployee(sessionFactory);
+					EmployeeService.updateEmployee();
 					break;
 				case "4":
 					Integer sortFunction;
@@ -60,7 +60,7 @@ public class Application {
 					System.out.print("Input Sort order: ");	
 					orderFunction = InputUtil.inputOptionCheck(2);
 
-					EmployeeService.listEmployees(sessionFactory, sortFunction, orderFunction);
+					EmployeeService.listEmployees(sortFunction, orderFunction);
 					break;
 				case "5":
 				String employeeRoleFunction = new String();
@@ -77,13 +77,13 @@ public class Application {
 
 						switch (employeeRoleFunction) {
 							case "1":
-								EmployeeRoleService.addRemoveEmployeeRoles(sessionFactory, 1);
+								EmployeeRoleService.addRemoveEmployeeRoles(1);
 								break;
 							case "2":
-								EmployeeRoleService.addRemoveEmployeeRoles(sessionFactory, 2);
+								EmployeeRoleService.addRemoveEmployeeRoles(2);
 								break;
 							case "3":
-								EmployeeRoleService.listEmployeeRoles(sessionFactory);
+								EmployeeRoleService.listEmployeeRoles();
 								break;
 							case "4":
 								subFunctionFlag = true;
@@ -111,16 +111,16 @@ public class Application {
 
 						switch (contactInfoFunction) {
 							case "1":
-								ContactInfoService.addContactInfo(sessionFactory);
+								ContactInfoService.addContactInfo();
 								break;
 							case "2":
-								ContactInfoService.removeContactInfo(sessionFactory);
+								ContactInfoService.removeContactInfo();
 								break;
 							case "3":
-								ContactInfoService.updateContactInfo(sessionFactory);
+								ContactInfoService.updateContactInfo();
 								break;
 							case "4":
-								ContactInfoService.listContactInfo(sessionFactory);
+								ContactInfoService.listContactInfo();
 								break;
 							case "5":
 								subFunctionFlag = true;
@@ -158,13 +158,13 @@ public class Application {
 								roleName = InputUtil.getRequiredInput();
 								Roles addedRole = new Roles(roleName, roleCode);		
 														
-								RoleService.addRoles(sessionFactory, addedRole);
+								RoleService.addRoles(addedRole);
 								break;
 							case "2":
-								RoleService.removeRoles(sessionFactory);
+								RoleService.removeRoles();
 								break;
 							case "3":
-								RoleService.updateRoles(sessionFactory);
+								RoleService.updateRoles();
 								break;
 							case "4":
 								System.out.println("Sort Roles:");
@@ -179,7 +179,7 @@ public class Application {
 								System.out.print("Choose order rule: ");
 								Integer orderRule = InputUtil.inputOptionCheck(2);
 
-								RoleService.listRoles(sessionFactory, sortRule, orderRule);
+								RoleService.listRoles(sortRule, orderRule);
 								break;
 							case "5":
 								subFunctionFlag = true;
@@ -198,11 +198,11 @@ public class Application {
 					System.out.println("[3]    Average GWA");
 					System.out.print("Choose a function: ");
 					Integer option = InputUtil.inputOptionCheck(3);
-					EmployeeDAO.gwaStatistics(sessionFactory, option);
+					EmployeeDAO.gwaStatistics(option);
 					break;
 				case "9":
 					exit = true;
-					HibernateUtil.shutdown(sessionFactory);
+					HibernateUtil.shutdown();
 					break;
 				default:
 					System.out.println(function + " is not a valid function. Choose another function");

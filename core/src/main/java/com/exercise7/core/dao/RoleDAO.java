@@ -1,6 +1,7 @@
-package com.exercise6.core.dao;
+package com.exercise7.core.dao;
 
-import com.exercise6.core.model.Roles;
+import com.exercise7.core.model.Roles;
+import com.exercise7.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.Query;
@@ -12,7 +13,8 @@ import java.util.List;
 
 
 public class RoleDAO {
-	public static void addRole(SessionFactory sessionFactory, Roles role) {
+	public static void addRole(Roles role) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 
@@ -31,7 +33,8 @@ public class RoleDAO {
 		}
 	}
 
-	public static List <Roles> showRoles(SessionFactory sessionFactory, Integer sortRule, Integer orderRule) {
+	public static List <Roles> showRoles(Integer sortRule, Integer orderRule) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Query query = null;
@@ -73,7 +76,8 @@ public class RoleDAO {
 		return list;
 	}
 
-	public static void updateRole(SessionFactory sessionFactory, Roles role) {
+	public static void updateRole(Roles role) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 
@@ -90,7 +94,8 @@ public class RoleDAO {
 		}
 	}
 
-	public static void deleteRole(SessionFactory sessionFactory, Long roleId) {
+	public static void deleteRole(Long roleId) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 
@@ -111,7 +116,8 @@ public class RoleDAO {
 		}
 	}			
 
-	public static Boolean checkDuplicateRole(SessionFactory sessionFactory, Roles role, Integer option) {
+	public static Boolean checkDuplicateRole(Roles role, Integer option) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Boolean existing = false;
@@ -127,7 +133,7 @@ public class RoleDAO {
 				query.setParameter("rolecode", role.getRoleCode());
 				query.setParameter("rolename", role.getRoleName());
 			} else if (option == 3) {								/*Check Duplicate assigned to employee given roleid*/
-				query = session.createSQLQuery("SELECT B.EMPLOYEEID from EMPLOYEEROLE B WHERE B.ROLEID = :paramId");
+				query = session.createQuery("SELECT a.id from Employee a join a.role as b WHERE b.id = :paramId");
 				query.setParameter("paramId", role.getId());
 			} else if (option == 4) {								/*Check duplicate given roleId*/
 				query = session.createQuery("SELECT id FROM Roles WHERE id = :roleid");
@@ -149,7 +155,8 @@ public class RoleDAO {
 		return existing;
 	}
 
-	public static Roles getRoleDetails(SessionFactory sessionFactory, Long roleId) {
+	public static Roles getRoleDetails(Long roleId) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Criteria criteria = null;

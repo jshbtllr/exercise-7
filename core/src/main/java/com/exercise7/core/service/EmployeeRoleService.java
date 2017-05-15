@@ -1,21 +1,20 @@
-package com.exercise6.core.service;
-import com.exercise6.core.model.Roles;
-import com.exercise6.core.model.Employee;
-import com.exercise6.util.InputUtil;
-import com.exercise6.core.dao.RoleDAO;
-import com.exercise6.core.dao.EmployeeDAO;
-import com.exercise6.core.service.RoleService;
+package com.exercise7.core.service;
+import com.exercise7.core.model.Roles;
+import com.exercise7.core.model.Employee;
+import com.exercise7.util.InputUtil;
+import com.exercise7.core.dao.RoleDAO;
+import com.exercise7.core.dao.EmployeeDAO;
+import com.exercise7.core.service.RoleService;
 import java.util.Set;
 import java.util.Iterator;
-import org.hibernate.SessionFactory;
 
 public class EmployeeRoleService {
-	public static void addRemoveEmployeeRoles(SessionFactory sessionFactory, Integer option) {			/*Option 1 add, Option 2 remove*/
+	public static void addRemoveEmployeeRoles(Integer option) {			/*Option 1 add, Option 2 remove*/
 		Employee employee = null;
 		Long employeeId = null;
 		Set <Roles> employeeRoles;
 
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+		EmployeeService.listEmployees(4, 0);
 		if(option == 1) {
 			System.out.print("Add role to which EmployeeId: ");
 		} else {
@@ -24,44 +23,44 @@ public class EmployeeRoleService {
 
 		employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a valid Employee ID: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
 		employeeRoles = employee.getRole();	
 
 		if(option == 1) {
-			employeeRoles = addRoleSet(sessionFactory, employeeRoles);	
+			employeeRoles = addRoleSet(employeeRoles);	
 		} else {
 			if(employeeRoles.isEmpty()) {
 				System.out.println("No Roles to remove");
 				return;
 			}
-			employeeRoles = removeRoleSet(sessionFactory, employeeRoles);
+			employeeRoles = removeRoleSet(employeeRoles);
 		}
 
 		employee.setRole(employeeRoles);
-		EmployeeDAO.updateEmployee(sessionFactory, employee);
+		EmployeeDAO.updateEmployee(employee);
 	}
 
-	public static Set <Roles> addRoleSet(SessionFactory sessionFactory, Set <Roles> roles) {
+	public static Set <Roles> addRoleSet(Set <Roles> roles) {
 		Roles newRole = new Roles(" ", " ");
 		Long roleId = null;
 		Boolean exist = false;
 
-		RoleService.listRoles(sessionFactory, 1, 1);
+		RoleService.listRoles(1, 1);
 		System.out.print("Input the Role Id to add: ");
 		roleId = InputUtil.inputOptionCheck().longValue();
 		newRole.setId(roleId);
 
-		if(!(RoleDAO.checkDuplicateRole(sessionFactory, newRole, 4))) {
+		if(!(RoleDAO.checkDuplicateRole(newRole, 4))) {
 			System.out.println("Role ID is not a valid Role ID. Role not added");
 			return roles;
 		}
 
-		newRole = RoleDAO.getRoleDetails(sessionFactory, roleId);
+		newRole = RoleDAO.getRoleDetails(roleId);
 		
 		if(roles.isEmpty()) {
 			roles.add(newRole);
@@ -79,7 +78,7 @@ public class EmployeeRoleService {
 		return roles;
 	}
 
-	public static Set <Roles> removeRoleSet(SessionFactory sessionFactory, Set <Roles> roles) {
+	public static Set <Roles> removeRoleSet(Set <Roles> roles) {
 		Roles deleteRole = new Roles(" ", " ");
 		Long roleId = null;
 		Boolean exist = false;
@@ -97,11 +96,11 @@ public class EmployeeRoleService {
 		roleId = InputUtil.inputOptionCheck().longValue();
 		deleteRole.setId(roleId);
 
-		if(!(RoleDAO.checkDuplicateRole(sessionFactory, deleteRole, 4))) {
+		if(!(RoleDAO.checkDuplicateRole(deleteRole, 4))) {
 			System.out.println("Role ID is not a valid Role ID. Role not added");
 			return roles;
 		}
-		deleteRole = RoleDAO.getRoleDetails(sessionFactory, roleId);
+		deleteRole = RoleDAO.getRoleDetails(roleId);
 		
 		iterator = roles.iterator();
 		while(iterator.hasNext()) {
@@ -119,8 +118,8 @@ public class EmployeeRoleService {
 		return roles;
 	}	
 
-	public static void listEmployeeRoles(SessionFactory sessionFactory) {
-		EmployeeService.listEmployees(sessionFactory, 4, 0);
+	public static void listEmployeeRoles() {
+		EmployeeService.listEmployees(4, 0);
 		Long employeeId;
 		Employee employee = null;
 		Set <Roles> roles = null;
@@ -128,12 +127,12 @@ public class EmployeeRoleService {
 		System.out.print("Show the roles of which EmployeeId: ");
 		employeeId = InputUtil.inputOptionCheck().longValue();
 
-		while (!(EmployeeDAO.employeeCheck(sessionFactory, employeeId))) {
+		while (!(EmployeeDAO.employeeCheck(employeeId))) {
 			System.out.print("Employee ID chosen does not exist. Enter a new employee id to delete: ");
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}		
 
-		employee = EmployeeDAO.getEmployee(sessionFactory, employeeId);
+		employee = EmployeeDAO.getEmployee(employeeId);
 		roles = employee.getRole();
 
 		System.out.println("Employee has: ");
