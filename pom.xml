@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.exercise7</groupId>
-	<artifactId>EmployeeRegistrationSystem</artifactId>
+	<artifactId>Employee-Annotation</artifactId>
 	<version>1.0.1</version>
 	<packaging>pom</packaging>
 
@@ -23,7 +23,6 @@
 		<hibernate-dependency-version>4.3.11.Final</hibernate-dependency-version>
 		<postgres-driver-version>9.4.1212</postgres-driver-version>
 		<javassist-version>3.12.1.GA</javassist-version>
-	<!--	<hibernate-annotation-version>3.5.6-Final</hibernate-annotation-version>-->
 	</properties>
 
 	<profiles>
@@ -78,12 +77,6 @@
 				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate-dependency-version}</version>			
 			</dependency>
-
-	<!--		<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-annotations</artifactId>
-				<version>${hibernate-annotation-version}</version>
-			</dependency>-->
 
 			<dependency>
 				<groupId>org.postgresql</groupId>

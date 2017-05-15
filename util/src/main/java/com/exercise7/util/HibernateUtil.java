@@ -1,9 +1,8 @@
 package com.exercise7.util;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-//import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-//import org.hibernate.service.ServiceRegistry;
+import org.hibernate.cfg.AnnotationConfiguration;
+
 
 public class HibernateUtil {
 
@@ -12,8 +11,7 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		if(sessionFactory == null) {
-			Configuration configuration = new Configuration();
-		//	serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+			AnnotationConfiguration configuration = new AnnotationConfiguration();
 			sessionFactory = configuration.configure("com/exercise7/infra/persistence/hibernate.cfg.xml").buildSessionFactory();
 		}
 		return sessionFactory;
