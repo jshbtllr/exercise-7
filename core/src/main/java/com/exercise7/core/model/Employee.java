@@ -8,7 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ElementCollection;
+import javax.persistence.CollectionTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
@@ -107,17 +108,17 @@ public class Employee {
 		return this.employed;
 	}
 
-	@OneToMany(
-		cascade=CascadeType.ALL,
-		fetch=FetchType.EAGER)
-	@JoinColumn(name="employee_id")	
+	@ElementCollection(fetch=FetchType.LAZY)
+	@CollectionTable(
+		name="CONTACTINFO",
+		joinColumns=@JoinColumn(name="employee_id"))
 	public Set <ContactInfo> getContactInfo() {
 		return this.contactInfo;
 	}
 
 	@ManyToMany(
 		cascade=CascadeType.ALL,
-		fetch=FetchType.EAGER)
+		fetch=FetchType.LAZY)
 	@JoinTable(
 		name="employeerole",
 		joinColumns=@JoinColumn(name="employee_id", referencedColumnName="id"),

@@ -49,6 +49,7 @@ public class EmployeeDAO {
 		try {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			if(sort == 1) {
 				if(order == 1) {
@@ -65,7 +66,8 @@ public class EmployeeDAO {
 				}
 			}
 
-			list = criteria.list();			
+			list = criteria.list();		
+			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -97,27 +99,6 @@ public class EmployeeDAO {
 		}			
 	}
 
-	public static void deleteContactInfo(Long contactId) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		Query query = null;
-
-		try {
-			transaction = session.beginTransaction();
-			query = session.createQuery("DELETE FROM ContactInfo WHERE id = :id");
-			query.setParameter("id", contactId);
-			query.executeUpdate();
-			transaction.commit();			
-		} catch(HibernateException he) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-		} finally {
-			session.close();
-		}			
-	}	
-
 	public static Employee getEmployee(Long employeeId) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -130,6 +111,7 @@ public class EmployeeDAO {
 			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
 			employee = (Employee) criteria.list().get(0);
+			System.out.println(employee.getContactInfo().size() + "       " + employee.getRole().size());
 		} catch(HibernateException he) {
 			if(transaction != null) {
 				transaction.rollback();
