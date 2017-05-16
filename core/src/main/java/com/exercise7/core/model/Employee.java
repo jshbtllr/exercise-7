@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
+import javax.persistence.GenerationType;
 import java.util.Set;
 import java.util.Date;
 
@@ -50,7 +51,7 @@ public class Employee {
 		this.role = role;
 	}
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return this.id;

@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name="CONTACTINFO")
@@ -24,7 +25,7 @@ public class ContactInfo {
 		this.infoDetail = infoDetail;
 	}
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", nullable=false, unique=true)
 	public Long getId() {
 		return this.id;
