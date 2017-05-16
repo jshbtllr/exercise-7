@@ -170,7 +170,7 @@ public class ContactInfoService {
 				System.out.println("Contact Info: " + list.getInfoDetail());
 				System.out.println("-------------------");
 			}
-			System.out.print("Input the Contact Id to update: ");
+			System.out.print("Input the Contact Info to update: ");
 			information = InputUtil.getRequiredInput();
 			
 			for(ContactInfo list : contacts) {
@@ -196,7 +196,7 @@ public class ContactInfoService {
 			EmployeeDAO.updateEmployee(employee);
 
 			if(!exist) {
-				System.out.println("Contact ID not assigned to employee");
+				System.out.println("Contact Info not assigned to employee");
 			}
 
 		} else {
@@ -217,9 +217,8 @@ public class ContactInfoService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}			
 
-		employee = EmployeeDAO.getEmployee(employeeId);	
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);	
 		contacts = employee.getContactInfo();
-		System.out.println("DSGHSS " + contacts.size());
 
 		if(!contacts.isEmpty()) {
 			System.out.println("Employee has below Contact Info: ");

@@ -97,7 +97,7 @@ public class EmployeeRoleService {
 		deleteRole.setId(roleId);
 
 		if(!(RoleDAO.checkDuplicateRole(deleteRole, 4))) {
-			System.out.println("Role ID is not a valid Role ID. Role not added");
+			System.out.println("Role ID is not a valid Role ID. Role not removed");
 			return roles;
 		}
 		deleteRole = RoleDAO.getRoleDetails(roleId);
@@ -132,7 +132,7 @@ public class EmployeeRoleService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}		
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		roles = employee.getRole();
 
 		System.out.println("Employee has: ");

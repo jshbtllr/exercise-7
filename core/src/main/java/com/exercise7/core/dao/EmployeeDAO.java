@@ -4,6 +4,7 @@ import com.exercise7.core.model.Employee;
 import com.exercise7.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -49,7 +50,7 @@ public class EmployeeDAO {
 		try {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
-			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			//criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			if(sort == 1) {
 				if(order == 1) {
@@ -67,6 +68,10 @@ public class EmployeeDAO {
 			}
 
 			list = criteria.list();		
+			for ( Employee employee : list ) {
+				Hibernate.initialize(employee.getRole());
+				Hibernate.initialize(employee.getContactInfo());
+			}
 			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
 			if (transaction != null) {
@@ -111,7 +116,6 @@ public class EmployeeDAO {
 			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
 			employee = (Employee) criteria.list().get(0);
-			System.out.println(employee.getContactInfo().size() + "       " + employee.getRole().size());
 		} catch(HibernateException he) {
 			if(transaction != null) {
 				transaction.rollback();
@@ -123,6 +127,32 @@ public class EmployeeDAO {
 		}
 		return employee;
 	}		
+
+	public static Employee getEmployeeCollection(Long employeeId) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		Employee employee = null;
+		Criteria criteria = null;
+
+		try {
+			transaction = session.beginTransaction();
+			criteria = session.createCriteria(Employee.class);
+			criteria.add(Restrictions.eq("id", employeeId));
+			employee = (Employee) criteria.list().get(0);
+			Hibernate.initialize(employee.getRole());
+			Hibernate.initialize(employee.getContactInfo());
+		} catch(HibernateException he) {
+			if(transaction != null) {
+				transaction.rollback();
+			}
+			System.out.println("Error getting employee");
+			he.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return employee;
+	}			
 
 	public static void updateEmployee(Employee employee) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
