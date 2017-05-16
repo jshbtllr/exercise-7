@@ -1,8 +1,11 @@
 package com.exercise7.core.model;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class Address {
 	
-	private Long id;
+	//private Long id;
 	private String streetNumber;
 	private String barangay;
 	private String city;
@@ -18,32 +21,29 @@ public class Address {
 		this.country = country;
 	}
 
-	private Long getId() {
-		return this.id;
-	}
-
+	@Column(name="street")
 	public String getStreetNumber() {
 		return this.streetNumber;
 	}
 
+	@Column(name="barangay")
 	public String getBarangay() {
 		return this.barangay;
 	}
 
+	@Column(name="city")
 	public String getCity() {
 		return this.city;
 	}
 
+	@Column(name="zipcode")
 	public String getZipcode() {
 		return this.zipcode;
 	}
 
+	@Column(name="country")
 	public String getCountry() {
 		return this.country;
-	}
-
-	public void setId(Long input) {
-		this.id = input;
 	}
 
 	public void setStreetNumber(String input) {

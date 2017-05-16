@@ -1,8 +1,22 @@
 package com.exercise7.core.model;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import java.util.Set;
 import java.util.Date;
 
+@Entity
+@Table(name="Employee")
 public class Employee {
 	private Long id;
 	private String lastName;
@@ -36,54 +50,77 @@ public class Employee {
 		this.role = role;
 	}
 
+	@Id @GeneratedValue
+	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return this.id;
 	}
 
+	@Column(name="last_name")
 	public String getLastName() {
 		return this.lastName;
 	}
 
+	@Column(name="first_name")
 	public String getFirstName() {
 		return this.firstName;
 	}
 
+	@Column(name="middle_name")
 	public String getMiddleName() {
 		return this.middleName;
 	}
 
+	@Column(name="suffix")
 	public String getSuffix() {
 		return this.suffix;
 	}
 
+	@Column(name="title")
 	public String getTitle() {
 		return this.title;
 	}
 
+	@Embedded
 	public Address getAddress() {
 		return this.address;
 	}
 
+	@Column(name="birthday")
 	public Date getBirthday() {
 		return this.birthday;
 	}
 
+	@Column(name="gwa")
 	public Float getGradeWeightAverage() {
 		return this.gradeWeightAverage;
 	}
 
+	@Column(name="hire_date")
 	public Date getHireDate() {
 		return this.hireDate;
 	}
 
+	@Column(name="employed")
 	public Boolean getEmployed() {
 		return this.employed;
 	}
 
+	@OneToMany(
+		cascade=CascadeType.ALL,
+		fetch=FetchType.EAGER)
+	@JoinColumn(name="employee_id")	
 	public Set <ContactInfo> getContactInfo() {
 		return this.contactInfo;
 	}
 
+	@ManyToMany(
+		cascade=CascadeType.ALL,
+		fetch=FetchType.EAGER)
+	@JoinTable(
+		name="employeerole",
+		joinColumns=@JoinColumn(name="employee_id", referencedColumnName="id"),
+		inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 	public Set <Roles> getRole() {
 		return this.role;
 	}

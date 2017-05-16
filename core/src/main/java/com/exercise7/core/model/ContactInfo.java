@@ -1,5 +1,16 @@
 package com.exercise7.core.model;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 
+@Entity
+@Table(name="CONTACTINFO")
 public class ContactInfo {
 	
 	private Long id;
@@ -13,18 +24,24 @@ public class ContactInfo {
 		this.infoDetail = infoDetail;
 	}
 
+	@Id @GeneratedValue
+	@Column(name="id", nullable=false, unique=true)
 	public Long getId() {
 		return this.id;
 	}
 
+	@Column(name="contact_info_type")
 	public String getInfoType() {
 		return this.infoType;
 	}
 
+	@Column(name="contact_information")
 	public String getInfoDetail() {
 		return this.infoDetail;
 	}
 
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="employee_id", insertable=false, updatable=false)
 	public Employee getParentEmployee() {
 		return this.parentEmployee;
 	}

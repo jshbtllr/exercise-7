@@ -1,5 +1,12 @@
 package com.exercise7.core.model;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 
+@Entity
+@Table(name="ROLES")
 public class Roles {
 	
 	private Long id;
@@ -12,14 +19,18 @@ public class Roles {
 		this.roleCode = roleCode;
 	}
 
+	@Id @GeneratedValue
+	@Column(name="id", unique=true, nullable=false)
 	public Long getId() {
 		return this.id;
 	}
 
+	@Column(name="role_name")
 	public String getRoleName() {
 		return this.roleName;
 	}
 
+	@Column(name="role_code")
 	public String getRoleCode() {
 		return this.roleCode;
 	}
