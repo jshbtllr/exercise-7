@@ -28,6 +28,14 @@
 		<property name="hibernate.show_sql">
 			${hibernate-show-sql}
 		</property>
+
+		<property name="hibernate.cache.region.factory_class">
+			${hibernate-cache-provider}
+		</property>
+
+		<property name="hibernate.cache.use_second_level_cache">
+			true
+		</property>
 		
 		<mapping class="com.exercise7.core.model.Employee"/>
 		<mapping class="com.exercise7.core.model.Address"/>

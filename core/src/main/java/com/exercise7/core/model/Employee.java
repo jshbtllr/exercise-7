@@ -16,9 +16,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.GenerationType;
 import java.util.Set;
 import java.util.Date;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name="Employee")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Employee {
 	private Long id;
 	private String lastName;

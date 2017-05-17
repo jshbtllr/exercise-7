@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 
 @Entity
 @Table(name="ROLES")
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Roles {
 	
 	private Long id;
