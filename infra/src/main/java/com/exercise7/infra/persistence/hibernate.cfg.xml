@@ -6,11 +6,11 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.dialect">
-			org.hibernate.dialect.PostgreSQLDialect
+			${hibernate-dialect}
 		</property>
 
 		<property name="hibernate.connection.driver-class">
-			org.postgresql.Driver
+			${hibernate-driver}
 		</property>
 
 		<property name="hibernate.connection.url">

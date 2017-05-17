@@ -23,6 +23,8 @@
 		<hibernate-dependency-version>4.3.11.Final</hibernate-dependency-version>
 		<postgres-driver-version>9.4.1212</postgres-driver-version>
 		<javassist-version>3.12.1.GA</javassist-version>
+		<sql-maven-plugin-version>1.5</sql-maven-plugin-version>
+		<commons-validator-version>1.6</commons-validator-version>
 	</properties>
 
 	<profiles>
@@ -33,6 +35,8 @@
 				<hibernate-username>postgres</hibernate-username>
 				<hibernate-password>ex1stgl0bal</hibernate-password>
 				<hibernate-show-sql>true</hibernate-show-sql>
+				<hibernate-driver>org.postgresql.Driver</hibernate-driver>
+				<hibernate-dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate-dialect>
 			</properties>
 		</profile>
 		<profile>
@@ -42,6 +46,8 @@
 				<hibernate-username>postgres</hibernate-username>
 				<hibernate-password>postgres</hibernate-password>
 				<hibernate-show-sql>false</hibernate-show-sql>
+				<hibernate-driver>org.postgresql.Driver</hibernate-driver>
+				<hibernate-dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate-dialect>
 			</properties>
 		</profile>
 	</profiles>
@@ -89,6 +95,12 @@
 			    <artifactId>javassist</artifactId>
 			    <version>${javassist-version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>commons-validator</groupId>
+				<artifactId>commons-validator</artifactId>
+				<version>${commons-validator-version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -96,6 +108,40 @@
  		<finalName>${project.artifactId}</finalName>
  		<pluginManagement>
 	 		<plugins>
+	 			<plugin>
+	 				<groupId>org.codehaus.mojo</groupId>
+	 				<artifactId>sql-maven-plugin</artifactId>
+	 				<version>${sql-maven-plugin-version}</version>
+	 				<dependencies>
+	 					<dependency>
+	 						<groupId>org.postgresql</groupId>
+	 						<artifactId>postgresql</artifactId>
+	 						<version>${postgres-driver-version}</version>
+	 					</dependency>
+	 				</dependencies>
+	 				<configuration>
+	 					<driver>${hibernate-driver}</driver>
+	 					<url>${hibernate-url}</url>
+	 					<username>${hibernate-username}</username>
+	 					<password>${hibernate-password}</password>
+	 				</configuration>
+			        <executions>
+			        	<execution>
+				          <id>create-data</id>
+				           <phase>process-test-resources</phase>
+				           <goals>
+				             <goal>execute</goal>
+			    	       </goals>
+			        	   <configuration>
+			        	   	<autocommit>true</autocommit>
+			        	   	<srcFiles>
+			        	   		<srcFile>src/main/java/com/exercise7/infra/buildtools/05_14_2017_01.sql</srcFile>
+			        	   	</srcFiles>
+				          </configuration>
+				        </execution>
+				    </executions>
+	 			</plugin>
+
 	 			<plugin>
  					<groupId>org.apache.maven.plugins</groupId>
  					<artifactId>maven-dependency-plugin</artifactId>

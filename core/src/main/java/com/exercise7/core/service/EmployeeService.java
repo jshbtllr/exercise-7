@@ -144,9 +144,7 @@ public class EmployeeService {
 
 					roles = employee.getRole();
 					contacts = employee.getContactInfo();
-
-					System.out.println(roles.size() +    "               "  + contacts.size());
-
+					System.out.println("Current Roles: ");
 					if(roles.size() == 0) {
 						System.out.println("--------------------");
 						System.out.println("There are currently no roles assigned to employee");
@@ -158,6 +156,7 @@ public class EmployeeService {
 						}
 					}
 
+					System.out.println("Current Contact Information: ");
 					if(contacts.size() == 0) {
 						System.out.println("--------------------");
 						System.out.println("There are currently no contact info assigned to employee");

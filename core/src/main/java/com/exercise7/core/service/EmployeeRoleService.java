@@ -28,7 +28,7 @@ public class EmployeeRoleService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		employeeRoles = employee.getRole();	
 
 		if(option == 1) {

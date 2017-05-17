@@ -5,6 +5,7 @@ import com.exercise7.util.InputUtil;
 import com.exercise7.core.dao.EmployeeDAO;
 import java.util.Set;
 import java.util.Iterator;
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class ContactInfoService {
 	public static void addContactInfo() {
@@ -21,7 +22,7 @@ public class ContactInfoService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		contacts = employee.getContactInfo();	
 
 		contacts = addContactSet(contacts, employee);
@@ -65,7 +66,7 @@ public class ContactInfoService {
 		String infoType = null;
 		if(option == 1) {
 			infoType = "email";
-			while((information.indexOf('@')) < 0) {
+			while(!EmailValidator.getInstance().isValid(information)) {
 				System.out.print("Input is not a valid email. Enter a valid email: ");
 				information = InputUtil.getRequiredInput();				
 			}
@@ -104,7 +105,7 @@ public class ContactInfoService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		contacts = employee.getContactInfo();
 
 		System.out.print("Employee has ");
@@ -158,7 +159,7 @@ public class ContactInfoService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		contacts = employee.getContactInfo();
 
 		System.out.print("Employee has ");
