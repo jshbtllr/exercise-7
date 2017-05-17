@@ -28,6 +28,7 @@
 		<hibernate-cache-provider>org.hibernate.cache.ehcache.EhCacheRegionFactory</hibernate-cache-provider>
 		<hibernate-ehcache-version>4.3.8.Final</hibernate-ehcache-version>
 		<cache-provider-version>2.6.10</cache-provider-version>
+		<buildtool-sql>src/main/java/com/exercise7/infra/buildtools/05_17_2017_01.sql</buildtool-sql>
 	</properties>
 
 	<profiles>
@@ -48,7 +49,7 @@
 				<hibernate-url>jdbc:postgresql://localhost:5432/employeeregistration</hibernate-url>
 				<hibernate-username>postgres</hibernate-username>
 				<hibernate-password>postgres</hibernate-password>
-				<hibernate-show-sql>false</hibernate-show-sql>
+				<hibernate-show-sql>true</hibernate-show-sql>
 				<hibernate-driver>org.postgresql.Driver</hibernate-driver>
 				<hibernate-dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate-dialect>
 			</properties>
@@ -150,7 +151,7 @@
 			        	   <configuration>
 			        	   	<autocommit>true</autocommit>
 			        	   	<srcFiles>
-			        	   		<srcFile>src/main/java/com/exercise7/infra/buildtools/05_14_2017_01.sql</srcFile>
+			        	   		<srcFile>${buildtool-sql}</srcFile>
 			        	   	</srcFiles>
 				          </configuration>
 				        </execution>

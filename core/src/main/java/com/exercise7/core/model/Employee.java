@@ -115,6 +115,7 @@ public class Employee {
 	@CollectionTable(
 		name="CONTACTINFO",
 		joinColumns=@JoinColumn(name="employee_id"))
+	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 	public Set <ContactInfo> getContactInfo() {
 		return this.contactInfo;
 	}
@@ -126,6 +127,7 @@ public class Employee {
 		name="employeerole",
 		joinColumns=@JoinColumn(name="employee_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
+	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 	public Set <Roles> getRole() {
 		return this.role;
 	}

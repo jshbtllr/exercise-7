@@ -50,7 +50,6 @@ public class EmployeeDAO {
 		try {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
-			//criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			if(sort == 1) {
 				if(order == 1) {
@@ -67,10 +66,12 @@ public class EmployeeDAO {
 				}
 			}
 
-			list = criteria.list();		
-			for ( Employee employee : list ) {
-				Hibernate.initialize(employee.getRole());
-				Hibernate.initialize(employee.getContactInfo());
+			list = criteria.setCacheable(true).list();	
+			if(order != 0) {	
+				for ( Employee employee : list ) {
+					Hibernate.initialize(employee.getRole());
+					Hibernate.initialize(employee.getContactInfo());
+				}
 			}
 			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
@@ -115,7 +116,7 @@ public class EmployeeDAO {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
-			employee = (Employee) criteria.list().get(0);
+			employee = (Employee) criteria.setCacheable(true).list().get(0);
 		} catch(HibernateException he) {
 			if(transaction != null) {
 				transaction.rollback();
@@ -139,7 +140,7 @@ public class EmployeeDAO {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
-			employee = (Employee) criteria.list().get(0);
+			employee = (Employee) criteria.setCacheable(true).list().get(0);
 			Hibernate.initialize(employee.getRole());
 			Hibernate.initialize(employee.getContactInfo());
 		} catch(HibernateException he) {
@@ -184,7 +185,7 @@ public class EmployeeDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			query = session.createQuery("SELECT id FROM Employee WHERE id = :employeeid");
+			query = session.createQuery("SELECT id FROM Employee WHERE id = :employeeid").setCacheable(true);
 			query.setParameter("employeeid", employeeId);
 
 			present = !(query.list().isEmpty());
@@ -212,7 +213,7 @@ public class EmployeeDAO {
 			transaction = session.beginTransaction();
 
 			if(option != 3) {
-				criteria = session.createCriteria(Employee.class);
+				criteria = session.createCriteria(Employee.class).setCacheable(true);
 				ProjectionList projectionList = Projections.projectionList();
 				projectionList.add(Projections.property("firstName"));
 				projectionList.add(Projections.property("lastName"));
@@ -239,7 +240,7 @@ public class EmployeeDAO {
 			} else {
 				System.out.print("Average GWA of All Registered employee is ");
 				query = session.createQuery("SELECT avg(gradeWeightAverage) FROM Employee");
-				System.out.println(query.list().get(0));
+				System.out.println(query.setCacheable(true).list().get(0));
 			}
 		} catch(HibernateException he) {
 			if (transaction != null)  {
