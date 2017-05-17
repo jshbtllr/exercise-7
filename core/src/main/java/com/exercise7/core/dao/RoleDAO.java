@@ -64,7 +64,7 @@ public class RoleDAO {
 				}
 			}
 
-			list = query.list();
+			list = query.setCacheable(true).list();
 		} catch(HibernateException he) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -101,7 +101,7 @@ public class RoleDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			Query query = session.createQuery("DELETE FROM Roles WHERE id = :roleid");			
+			Query query = session.createQuery("DELETE FROM Roles WHERE id = :roleid").setCacheable(true);			
 			query.setParameter("roleid", roleId);
 			query.executeUpdate();
 			transaction.commit();
@@ -126,17 +126,17 @@ public class RoleDAO {
 		try {
 			transaction = session.beginTransaction();
 			if (option == 1) {										/*Check Duplicate given rolecode*/
-				query = session.createQuery("SELECT id FROM Roles WHERE roleCode = :rolecode");
+				query = session.createQuery("SELECT id FROM Roles WHERE roleCode = :rolecode").setCacheable(true);			
 				query.setParameter("rolecode", role.getRoleCode());
 			} else if (option == 2) {								/*Check Duplicate given rolecode and rolename*/
-				query = session.createQuery("SELECT id FROM Roles WHERE roleCode = :rolecode AND roleName = :rolename");
+				query = session.createQuery("SELECT id FROM Roles WHERE roleCode = :rolecode AND roleName = :rolename").setCacheable(true);			
 				query.setParameter("rolecode", role.getRoleCode());
 				query.setParameter("rolename", role.getRoleName());
 			} else if (option == 3) {								/*Check Duplicate assigned to employee given roleid*/
-				query = session.createQuery("SELECT a.id from Employee a join a.role as b WHERE b.id = :paramId");
+				query = session.createQuery("SELECT a.id from Employee a join a.role as b WHERE b.id = :paramId").setCacheable(true);			
 				query.setParameter("paramId", role.getId());
 			} else if (option == 4) {								/*Check duplicate given roleId*/
-				query = session.createQuery("SELECT id FROM Roles WHERE id = :roleid");
+				query = session.createQuery("SELECT id FROM Roles WHERE id = :roleid").setCacheable(true);			
 				query.setParameter("roleid", role.getId());
 			}
 
@@ -164,7 +164,7 @@ public class RoleDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Roles.class);
+			criteria = session.createCriteria(Roles.class).setCacheable(true);			
 			criteria.add(Restrictions.eq("id", roleId));
 			output = (Roles) criteria.list().get(0);
 		} catch(HibernateException he) {
