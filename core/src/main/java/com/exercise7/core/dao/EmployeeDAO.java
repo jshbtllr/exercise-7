@@ -66,14 +66,14 @@ public class EmployeeDAO {
 				}
 			}
 
-			list = criteria.list();	
+			list = criteria.setCacheable(true).list();	
 			if(order != 0) {	
 				for ( Employee employee : list ) {
 					Hibernate.initialize(employee.getRole());
 					Hibernate.initialize(employee.getContactInfo());
 				}
 			}
-			list = criteria.setCacheable(true).list();	
+			//list = criteria.setCacheable(true).list();	
 			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
 			if (transaction != null) {

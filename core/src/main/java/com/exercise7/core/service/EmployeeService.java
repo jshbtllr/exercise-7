@@ -125,6 +125,7 @@ public class EmployeeService {
 				}
 			}
 
+			System.out.println("-------------------------------------------------------------------\n");
 			for ( Employee employee : list ) {
 				System.out.println("EmployeeID: " + employee.getId());
 				System.out.println("FullName:   " + ((employee.getTitle().equals("") || employee.getTitle().equals(" ")) ? "" : employee.getTitle() + " ") 
@@ -145,6 +146,8 @@ public class EmployeeService {
 
 					roles = employee.getRole();
 					contacts = employee.getContactInfo();
+
+					System.out.println("--------------------");
 					System.out.println("Current Roles: ");
 					if(roles.size() == 0) {
 						System.out.println("--------------------");
@@ -157,6 +160,7 @@ public class EmployeeService {
 						}
 					}
 
+					System.out.println("--------------------");
 					System.out.println("Current Contact Information: ");
 					if(contacts.size() == 0) {
 						System.out.println("--------------------");

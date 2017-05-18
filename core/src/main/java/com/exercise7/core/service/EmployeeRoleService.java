@@ -85,6 +85,7 @@ public class EmployeeRoleService {
 		Iterator <Roles> iterator = null;
 			
 		System.out.println("Available Roles for Employee: ");
+		System.out.println("---------------");
 		for (Roles list : roles) {
 			System.out.println("Role ID: " + list.getId());	
 			System.out.println("Role Code: " + list.getRoleCode());
@@ -135,12 +136,14 @@ public class EmployeeRoleService {
 		employee = EmployeeDAO.getEmployeeCollection(employeeId);
 		roles = employee.getRole();
 
-		System.out.println("Employee has: ");
+		System.out.print("Employee has ");
 
 		if(roles.isEmpty()) {
-			System.out.println("No available roles");
+			System.out.println("no available roles");
+			System.out.println("---------------");
 		} else {
 			System.out.println("the below rolecode and rolename as roles");
+			System.out.println("---------------");
 			for (Roles list : roles) {
 				System.out.println("Role Code: " + list.getRoleCode());
 				System.out.println("Role Name: " + list.getRoleName());
