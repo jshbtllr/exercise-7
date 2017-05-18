@@ -115,6 +115,7 @@ public class EmployeeService {
 		List <Employee> list = EmployeeDAO.showEmployees(sortFunction, orderFunction);
 		Set <Roles> roles;
 		Set <ContactInfo> contacts;
+
 		if(!list.isEmpty()) {
 			if(sortFunction == 2) {
 				Collections.sort(list, new gwaComparator());
@@ -132,11 +133,11 @@ public class EmployeeService {
 				if(sortFunction != 4) {  	/*Sort Type 4 for employeeid and Fullname prints*/
 					System.out.println("Address:    " + employee.getAddress().getStreetNumber() + " " + employee.getAddress().getBarangay() + " " 
 										+ employee.getAddress().getCity() + " " + employee.getAddress().getCountry() + " " + employee.getAddress().getZipcode());
-					System.out.println("Birthday:   " + employee.getBirthday());
+					System.out.println("Birthday:   " + employee.getBirthday().toString().substring(0,10));
 					System.out.println("GWA:        " + employee.getGradeWeightAverage());
 					if(employee.getEmployed().equals(true)) {
 						System.out.println("Employed:   Yes");
-						System.out.println("Hire Date:  " + employee.getHireDate());
+						System.out.println("Hire Date:  " + employee.getHireDate().toString().substring(0,10));
 					} else {
 						System.out.println("Employed:   No");
 						System.out.println("Hire Date:  " + "N/A");
