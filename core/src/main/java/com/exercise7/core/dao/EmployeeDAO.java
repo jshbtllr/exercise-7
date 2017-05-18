@@ -49,7 +49,7 @@ public class EmployeeDAO {
 		
 		try {
 			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Employee.class);
+			criteria = session.createCriteria(Employee.class).setCacheable(true);
 
 			if(sort == 1) {
 				if(order == 1) {
@@ -66,13 +66,14 @@ public class EmployeeDAO {
 				}
 			}
 
-			list = criteria.setCacheable(true).list();	
+			list = criteria.list();	
 			if(order != 0) {	
 				for ( Employee employee : list ) {
 					Hibernate.initialize(employee.getRole());
 					Hibernate.initialize(employee.getContactInfo());
 				}
 			}
+			list = criteria.setCacheable(true).list();	
 			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
 			if (transaction != null) {
@@ -114,7 +115,7 @@ public class EmployeeDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Employee.class);
+			criteria = session.createCriteria(Employee.class).setCacheable(true);
 			criteria.add(Restrictions.eq("id", employeeId));
 			employee = (Employee) criteria.setCacheable(true).list().get(0);
 		} catch(HibernateException he) {
@@ -233,8 +234,8 @@ public class EmployeeDAO {
 					criteria.add(Property.forName("gradeWeightAverage").eq(gwa));
 				}
 
-				List <Object []> test = criteria.list();
-				for(Object [] employee : test) {
+				List <Object []> employeeGWA = criteria.list();
+				for(Object [] employee : employeeGWA) {
 					System.out.println(employee[0] + " " +  employee[1] + " with " + employee[2] + " GWA.");
 				}
 			} else {

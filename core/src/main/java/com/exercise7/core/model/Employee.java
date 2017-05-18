@@ -21,7 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name="Employee")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class Employee {
 	private Long id;
 	private String lastName;
@@ -115,7 +115,7 @@ public class Employee {
 	@CollectionTable(
 		name="CONTACTINFO",
 		joinColumns=@JoinColumn(name="employee_id"))
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 	public Set <ContactInfo> getContactInfo() {
 		return this.contactInfo;
 	}
@@ -127,7 +127,7 @@ public class Employee {
 		name="employeerole",
 		joinColumns=@JoinColumn(name="employee_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 	public Set <Roles> getRole() {
 		return this.role;
 	}
