@@ -3,6 +3,7 @@ import com.exercise7.core.model.Roles;
 import com.exercise7.core.model.Address;
 import com.exercise7.core.model.ContactInfo;
 import com.exercise7.core.model.Employee;
+import com.exercise7.core.model.Person;
 import com.exercise7.util.InputUtil;
 import com.exercise7.core.dao.RoleDAO;
 import com.exercise7.core.dao.EmployeeDAO;
@@ -80,7 +81,8 @@ public class EmployeeService {
 		}
 
 		Address address = new Address(streetNumber, barangay, city, country, zipcode);
-		Employee employee = new Employee(lastName, firstName, middleName, suffix, title, address, birthdate, gradeWeightAverage, hireDate, employed, contacts, role);
+		Person person = new Person(firstName, lastName, middleName, suffix, title, birthdate);
+		Employee employee = new Employee(person, address, gradeWeightAverage, hireDate, employed, contacts, role);
 
 		do{
 			System.out.println("Employee Role Management");
@@ -128,13 +130,13 @@ public class EmployeeService {
 			System.out.println("-------------------------------------------------------------------\n");
 			for ( Employee employee : list ) {
 				System.out.println("EmployeeID: " + employee.getId());
-				System.out.println("FullName:   " + ((employee.getTitle().equals("") || employee.getTitle().equals(" ")) ? "" : employee.getTitle() + " ") 
-									+ employee.getFirstName() + " " + employee.getMiddleName() + " " + employee.getLastName() + " " + employee.getSuffix());
+				System.out.println("FullName:   " + ((employee.getPerson().getTitle().equals("") || employee.getPerson().getTitle().equals(" ")) ? "" : employee.getPerson().getTitle() + " ") 
+									+ employee.getPerson().getFirstName() + " " + employee.getPerson().getMiddleName() + " " + employee.getPerson().getLastName() + " " + employee.getPerson().getSuffix());
 				
 				if(sortFunction != 4) {  	/*Sort Type 4 for employeeid and Fullname prints*/
 					System.out.println("Address:    " + employee.getAddress().getStreetNumber() + " " + employee.getAddress().getBarangay() + " " 
 										+ employee.getAddress().getCity() + " " + employee.getAddress().getCountry() + " " + employee.getAddress().getZipcode());
-					System.out.println("Birthday:   " + employee.getBirthday().toString().substring(0,10));
+					System.out.println("Birthday:   " + employee.getPerson().getBirthday().toString().substring(0,10));
 					System.out.println("GWA:        " + employee.getGradeWeightAverage());
 					if(employee.getEmployed().equals(true)) {
 						System.out.println("Employed:   Yes");
@@ -239,15 +241,15 @@ public class EmployeeService {
 
 		if(option == 1) {
 			System.out.print("Input New First Name: ");
-			employee.setFirstName(InputUtil.getRequiredInput());
+			employee.getPerson().setFirstName(InputUtil.getRequiredInput());
 			System.out.print("Input New Last Name: ");
-			employee.setLastName(InputUtil.getRequiredInput());
+			employee.getPerson().setLastName(InputUtil.getRequiredInput());
 			System.out.print("Input New Middle Name: ");
-			employee.setMiddleName(InputUtil.getRequiredInput());
+			employee.getPerson().setMiddleName(InputUtil.getRequiredInput());
 			System.out.print("Input New Suffix Name (optional): ");
-			employee.setSuffix(InputUtil.getOptionalInput());
+			employee.getPerson().setSuffix(InputUtil.getOptionalInput());
 			System.out.print("Input New Title Name (optional): ");
-			employee.setTitle(InputUtil.getOptionalInput());
+			employee.getPerson().setTitle(InputUtil.getOptionalInput());
 		} else if(option == 2) {
 			System.out.print("Input New Street Number: ");
 			streetNumber = InputUtil.getRequiredInput();
@@ -262,7 +264,7 @@ public class EmployeeService {
 			employee.setAddress(new Address(streetNumber, barangay, city, country, zipcode));
 		} else if (option == 3) {
 			System.out.print("Input New Birthdate (dd/mm/yyyy): ");
-			employee.setBirthday(InputUtil.getDate());
+			employee.getPerson().setBirthday(InputUtil.getDate());
 		} else if (option == 4) {
 			System.out.print("Input new GWA: ");
 			employee.setGradeWeightAverage(InputUtil.getGrade());

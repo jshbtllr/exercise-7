@@ -10,7 +10,7 @@ public class RoleService {
 		if (RoleDAO.checkDuplicateRole(role, 1)) {
 			System.out.println("RoleCode: " + role.getRoleCode() + " already exists in the database");
 		} else {
-			RoleDAO.addRole(role);
+			RoleDAO.add(role);
 			System.out.println("New Role has been added");
 		}
 	}
@@ -62,14 +62,14 @@ public class RoleService {
 			} else {
 				role = RoleDAO.getRoleDetails(roleId);
 				role.setRoleCode(roleCode);
-				RoleDAO.updateRole(role);
+				RoleDAO.update(role);
 			}
 		} else if(option == 2) {
 			System.out.print("Input New RoleName: ");
 			roleName = InputUtil.getRequiredInput();
 			role = RoleDAO.getRoleDetails(roleId);
 			role.setRoleName(roleName);
-			RoleDAO.updateRole(role);
+			RoleDAO.update(role);
 		} else if(option == 3) {
 			System.out.print("Input New RoleCode: ");
 			roleCode = InputUtil.getRequiredInput();
@@ -83,7 +83,7 @@ public class RoleService {
 				role = RoleDAO.getRoleDetails(roleId);
 				role.setRoleCode(roleCode);
 				role.setRoleName(roleName);
-				RoleDAO.updateRole(role);
+				RoleDAO.update(role);
 			}
 		} else {
 			System.out.println("Invalid option chosen, exiting Update Role");
@@ -105,7 +105,7 @@ public class RoleService {
 		}
 
 		if (!(RoleDAO.checkDuplicateRole(role, 3))) {
-			RoleDAO.deleteRole(roleId);
+			RoleDAO.deleteRole(role);
 			System.out.println("Role deleted");
 		} else {
 			System.out.println("Specified Role still belongs to an employee");

@@ -50,6 +50,4 @@ public class Roles {
 	public void setRoleCode(String input) {
 		this.roleCode = input;
 	}
-
-
 }

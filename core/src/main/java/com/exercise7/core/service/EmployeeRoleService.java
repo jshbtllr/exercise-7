@@ -59,7 +59,6 @@ public class EmployeeRoleService {
 			System.out.println("Role ID is not a valid Role ID. Role not added");
 			return roles;
 		}
-
 		newRole = RoleDAO.getRoleDetails(roleId);
 		
 		if(roles.isEmpty()) {

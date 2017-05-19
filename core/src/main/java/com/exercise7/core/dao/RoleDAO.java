@@ -12,27 +12,7 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 
-public class RoleDAO {
-	public static void addRole(Roles role) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-
-		try {
-			transaction = session.beginTransaction();
-			session.save(role);
-			transaction.commit();
-		} catch(HibernateException he) {
-			if (transaction != null)  {
-				transaction.rollback();
-			}
-			System.out.println("Error encountered adding role");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}
-	}
-
+public class RoleDAO extends GenericDAO {
 	public static List <Roles> showRoles(Integer sortRule, Integer orderRule) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -74,47 +54,7 @@ public class RoleDAO {
 		}
 
 		return list;
-	}
-
-	public static void updateRole(Roles role) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-
-		try {
-			transaction = session.beginTransaction();
-			session.update(role);
-			transaction.commit();
-		} catch (HibernateException he) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-		} finally {
-			session.close();
-		}
-	}
-
-	public static void deleteRole(Long roleId) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-
-		try {
-			transaction = session.beginTransaction();
-			Query query = session.createQuery("DELETE FROM Roles WHERE id = :roleid");
-			query.setParameter("roleid", roleId);
-			query.executeUpdate();
-			transaction.commit();
-		} catch(HibernateException he) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			System.out.println("Error encountered deleting role");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}
-	}			
+	}		
 
 	public static Boolean checkDuplicateRole(Roles role, Integer option) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

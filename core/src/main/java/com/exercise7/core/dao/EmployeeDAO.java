@@ -1,6 +1,7 @@
 package com.exercise7.core.dao;
 
 import com.exercise7.core.model.Employee;
+import com.exercise7.core.model.EmployeeGradeDTO;
 import com.exercise7.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +16,7 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,13 +51,14 @@ public class EmployeeDAO {
 		
 		try {
 			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Employee.class).setCacheable(true);
+			criteria = session.createCriteria(Employee.class, "employee");
+			//criteria.createAlias
 
 			if(sort == 1) {
 				if(order == 1) {
-					criteria.addOrder(Order.asc("lastName"));
+					criteria.addOrder(Order.asc("employee.person.lastName"));
 				} else {
-					criteria.addOrder(Order.desc("lastName"));
+					criteria.addOrder(Order.desc("employee.person.lastName"));
 				}
 			} else if(sort == 3) {
 				if(order == 1) {
@@ -66,14 +69,13 @@ public class EmployeeDAO {
 				}
 			}
 
-			list = criteria.setCacheable(true).list();	
+			list = criteria.list();	
 			if(order != 0) {	
 				for ( Employee employee : list ) {
 					Hibernate.initialize(employee.getRole());
 					Hibernate.initialize(employee.getContactInfo());
 				}
-			}
-			//list = criteria.setCacheable(true).list();	
+			}	
 			System.out.println("Number of employees: " + list.size());	
 		} catch(HibernateException he) {
 			if (transaction != null) {
@@ -115,9 +117,9 @@ public class EmployeeDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Employee.class).setCacheable(true);
+			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
-			employee = (Employee) criteria.setCacheable(true).list().get(0);
+			employee = (Employee) criteria.list().get(0);
 		} catch(HibernateException he) {
 			if(transaction != null) {
 				transaction.rollback();
@@ -141,7 +143,7 @@ public class EmployeeDAO {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class);
 			criteria.add(Restrictions.eq("id", employeeId));
-			employee = (Employee) criteria.setCacheable(true).list().get(0);
+			employee = (Employee) criteria.list().get(0);
 			Hibernate.initialize(employee.getRole());
 			Hibernate.initialize(employee.getContactInfo());
 		} catch(HibernateException he) {
@@ -186,7 +188,7 @@ public class EmployeeDAO {
 
 		try {
 			transaction = session.beginTransaction();
-			query = session.createQuery("SELECT id FROM Employee WHERE id = :employeeid").setCacheable(true);
+			query = session.createQuery("SELECT id FROM Employee WHERE id = :employeeid");
 			query.setParameter("employeeid", employeeId);
 
 			present = !(query.list().isEmpty());
@@ -214,11 +216,11 @@ public class EmployeeDAO {
 			transaction = session.beginTransaction();
 
 			if(option != 3) {
-				criteria = session.createCriteria(Employee.class).setCacheable(true);
+				criteria = session.createCriteria(Employee.class, "employee");
 				ProjectionList projectionList = Projections.projectionList();
-				projectionList.add(Projections.property("firstName"));
-				projectionList.add(Projections.property("lastName"));
-				projectionList.add(Projections.property("gradeWeightAverage"));
+				projectionList.add(Projections.property("employee.person.firstName"), "firstName");
+				projectionList.add(Projections.property("employee.person.lastName"), "lastName");
+				projectionList.add(Projections.property("gradeWeightAverage"), "gradeWeightAverage");
 				criteria.setProjection(projectionList);
 
 				DetachedCriteria gwa = DetachedCriteria.forClass(Employee.class);
@@ -234,14 +236,15 @@ public class EmployeeDAO {
 					criteria.add(Property.forName("gradeWeightAverage").eq(gwa));
 				}
 
-				List <Object []> employeeGWA = criteria.list();
-				for(Object [] employee : employeeGWA) {
-					System.out.println(employee[0] + " " +  employee[1] + " with " + employee[2] + " GWA.");
+				criteria.setResultTransformer(Transformers.aliasToBean(EmployeeGradeDTO.class));
+				List <EmployeeGradeDTO> employeeGWA = criteria.list();
+				for(EmployeeGradeDTO employee : employeeGWA) {
+					System.out.println(employee.getFirstName() + " " +  employee.getLastName() + " with " + employee.getGradeWeightAverage() + " GWA.");
 				}
 			} else {
 				System.out.print("Average GWA of All Registered employee is ");
 				query = session.createQuery("SELECT avg(gradeWeightAverage) FROM Employee");
-				System.out.println(query.setCacheable(true).list().get(0));
+				System.out.println(query.list().get(0));
 			}
 		} catch(HibernateException he) {
 			if (transaction != null)  {

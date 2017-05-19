@@ -21,16 +21,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name="Employee")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Employee {
 	private Long id;
-	private String lastName;
-	private String firstName;
-	private String middleName;
-	private String suffix;
-	private String title;
+	private Person person;
 	private Address address;
-	private Date birthday;
 	private Float gradeWeightAverage;
 	private Date hireDate;
 	private Boolean employed;
@@ -38,16 +32,10 @@ public class Employee {
 	private Set <Roles> role;
 
 	public Employee() {}
-	public Employee(String lastName, String firstName, String middleName, String suffix, String title, 
-					Address address, Date birthday, Float gradeWeightAverage, Date hireDate, Boolean employed, 
+	public Employee(Person person, Address address, Float gradeWeightAverage, Date hireDate, Boolean employed, 
 					Set <ContactInfo> contactInfo, Set <Roles> role) {
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.suffix = suffix;
-		this.title = title;
+		this.person = person;
 		this.address = address;
-		this.birthday = birthday;
 		this.gradeWeightAverage = gradeWeightAverage;
 		this.hireDate = hireDate;
 		this.employed = employed;
@@ -61,39 +49,14 @@ public class Employee {
 		return this.id;
 	}
 
-	@Column(name="last_name")
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	@Column(name="first_name")
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-	@Column(name="middle_name")
-	public String getMiddleName() {
-		return this.middleName;
-	}
-
-	@Column(name="suffix")
-	public String getSuffix() {
-		return this.suffix;
-	}
-
-	@Column(name="title")
-	public String getTitle() {
-		return this.title;
+	@Embedded
+	public Person getPerson() {
+		return this.person;
 	}
 
 	@Embedded
 	public Address getAddress() {
 		return this.address;
-	}
-
-	@Column(name="birthday")
-	public Date getBirthday() {
-		return this.birthday;
 	}
 
 	@Column(name="gwa")
@@ -115,7 +78,6 @@ public class Employee {
 	@CollectionTable(
 		name="CONTACTINFO",
 		joinColumns=@JoinColumn(name="employee_id"))
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 	public Set <ContactInfo> getContactInfo() {
 		return this.contactInfo;
 	}
@@ -127,7 +89,6 @@ public class Employee {
 		name="employeerole",
 		joinColumns=@JoinColumn(name="employee_id", referencedColumnName="id"),
 		inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
-	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 	public Set <Roles> getRole() {
 		return this.role;
 	}
@@ -136,32 +97,13 @@ public class Employee {
 		this.id = input;
 	}
 
-	public void setLastName(String input) {
-		this.lastName = input;
+	public void setPerson(Person input) {
+		this.person = input;
 	}
 
-	public void setFirstName(String input) {
-		this.firstName = input;
-	}
-
-	public void setMiddleName(String input) {
-		this.middleName = input;
-	}
-
-	public void setSuffix(String input) {
-		this.suffix = input;
-	}
-
-	public void setTitle(String input) {
-		this.title = input;
-	}
 
 	public void setAddress(Address input) {
 		this.address = input;
-	}
-
-	public void setBirthday(Date input) {
-		this.birthday = input;
 	}
 
 	public void setGradeWeightAverage(Float input) {
