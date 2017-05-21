@@ -42,7 +42,7 @@ public class EmployeeRoleService {
 		}
 
 		employee.setRole(employeeRoles);
-		EmployeeDAO.updateEmployee(employee);
+		EmployeeDAO.update(employee);
 	}
 
 	public static Set <Roles> addRoleSet(Set <Roles> roles) {
@@ -59,7 +59,7 @@ public class EmployeeRoleService {
 			System.out.println("Role ID is not a valid Role ID. Role not added");
 			return roles;
 		}
-		newRole = RoleDAO.getRoleDetails(roleId);
+		newRole = RoleDAO.get(Roles.class, roleId);
 		
 		if(roles.isEmpty()) {
 			roles.add(newRole);
@@ -100,7 +100,7 @@ public class EmployeeRoleService {
 			System.out.println("Role ID is not a valid Role ID. Role not removed");
 			return roles;
 		}
-		deleteRole = RoleDAO.getRoleDetails(roleId);
+		deleteRole = RoleDAO.get(Roles.class, roleId);
 		
 		iterator = roles.iterator();
 		while(iterator.hasNext()) {

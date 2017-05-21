@@ -21,27 +21,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class EmployeeDAO {
-	public static void addEmployee (Employee employee) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-
-		try {
-			transaction = session.beginTransaction();
-			session.save(employee);
-			transaction.commit();
-		} catch(HibernateException he) {
-			if (transaction != null)  {
-				transaction.rollback();
-			}
-			System.out.println("Error encountered adding employee.");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}	
-	}
-
+public class EmployeeDAO extends GenericDAO {
 	public static List <Employee> showEmployees(Integer sort, Integer order) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
@@ -86,51 +66,7 @@ public class EmployeeDAO {
 		}
 
 		return list;				
-	}		
-
-	public static void deleteEmployee(Employee employee) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		Query query = null;
-
-		try {
-			transaction = session.beginTransaction();
-			session.delete(employee);
-			transaction.commit();		
-
-		} catch(HibernateException he) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-		} finally {
-			session.close();
-		}			
-	}
-
-	public static Employee getEmployee(Long employeeId) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		Employee employee = null;
-		Criteria criteria = null;
-
-		try {
-			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Employee.class);
-			criteria.add(Restrictions.eq("id", employeeId));
-			employee = (Employee) criteria.list().get(0);
-		} catch(HibernateException he) {
-			if(transaction != null) {
-				transaction.rollback();
-			}
-			System.out.println("Error getting employee");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return employee;
-	}		
+	}	
 
 	public static Employee getEmployeeCollection(Long employeeId) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -156,28 +92,7 @@ public class EmployeeDAO {
 			session.close();
 		}
 		return employee;
-	}			
-
-	public static void updateEmployee(Employee employee) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-
-		try {
-			transaction = session.beginTransaction();
-			session.update(employee);
-			transaction.commit();
-
-		} catch(HibernateException he) {
-			if (transaction != null)  {
-				transaction.rollback();
-			}
-			System.out.println("Error occurred when updating");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}
-	}		
+	}				
 
 	public static Boolean employeeCheck(Long employeeId) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

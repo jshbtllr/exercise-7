@@ -5,7 +5,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 	
-	//private Long id;
 	private String streetNumber;
 	private String barangay;
 	private String city;

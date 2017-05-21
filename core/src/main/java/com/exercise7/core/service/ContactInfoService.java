@@ -27,7 +27,7 @@ public class ContactInfoService {
 
 		contacts = addContactSet(contacts, employee);
 		employee.setContactInfo(contacts);
-		EmployeeDAO.updateEmployee(employee);
+		EmployeeDAO.update(employee);
 	}
 
 
@@ -129,7 +129,7 @@ public class ContactInfoService {
 			}
 
 			employee.setContactInfo(contacts);
-			EmployeeDAO.updateEmployee(employee);
+			EmployeeDAO.update(employee);
 
 			if(!exist) {
 				System.out.println("Contact Info given not assigned to employee");
@@ -194,7 +194,7 @@ public class ContactInfoService {
 			}
 
 			employee.setContactInfo(contacts);
-			EmployeeDAO.updateEmployee(employee);
+			EmployeeDAO.update(employee);
 
 			if(!exist) {
 				System.out.println("Contact Info not assigned to employee");

@@ -2,9 +2,36 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
          monitoring="autodetect" dynamicConfig="true">	
-	<defaultCache
-	    maxElementsInMemory="1000"
+
+    <diskStore path="cache"/>
+
+    <cache name="com.exercise7.core.model.Roles"
+	    maxElementsInMemory="2"
 	    eternal="false"
 	    timeToIdleSeconds="50"
-	    timeToLiveSeconds="100"/>
+	    timeToLiveSeconds="100"
+	    overflowToDisk="true"
+    	/>
+
+    <cache name="org.hibernate.cache.internal.StandardQueryCache"
+	    maxElementsInMemory="2"
+	    eternal="false"
+	    timeToIdleSeconds="50"
+	    timeToLiveSeconds="100"
+	    overflowToDisk="true"
+    	/>    	
+
+    <cache name="org.hibernate.cache.spi.UpdateTimeStampsCache"
+	    maxElementsInMemory="2"
+	    eternal="true"
+	    overflowToDisk="true"
+    	/>    	
+
+	<defaultCache
+	    maxElementsInMemory="5"
+	    eternal="false"
+	    timeToIdleSeconds="50"
+	    timeToLiveSeconds="100"
+	    overflowToDisk="true"
+	    />
 </ehcache>

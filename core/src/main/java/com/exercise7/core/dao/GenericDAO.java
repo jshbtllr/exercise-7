@@ -48,16 +48,14 @@ public class GenericDAO {
 		}
 	}	
 
-	public static void delete(Type deleted) {
+	public static <Type> void delete(Type deleted) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 
 		try {
 			transaction = session.beginTransaction();
-			Query query = session.createQuery("DELETE FROM Roles WHERE id = :roleid");
-			query.setParameter("roleid", id);
-			query.executeUpdate();
+			session.delete(deleted);
 			transaction.commit();
 		} catch(HibernateException he) {
 			if (transaction != null) {
@@ -68,6 +66,27 @@ public class GenericDAO {
 		} finally {
 			session.close();
 		}
-	}		
+	}	
+
+	public static <Type> Type get(Class<Type> entity, Long id) {
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		Type details = null;
+
+		try {
+			transaction = session.beginTransaction();
+			details = (Type) session.get(entity, id);
+		} catch(HibernateException he) {
+			if(transaction != null) {
+				transaction.rollback();
+			}
+			System.out.println("Error getting employee");
+			he.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return details;
+	}
 }
 

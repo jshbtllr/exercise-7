@@ -94,29 +94,4 @@ public class RoleDAO extends GenericDAO {
 
 		return existing;
 	}
-
-	public static Roles getRoleDetails(Long roleId) {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		Criteria criteria = null;
-		Roles output = null;
-
-		try {
-			transaction = session.beginTransaction();
-			criteria = session.createCriteria(Roles.class).setCacheable(true);			
-			criteria.add(Restrictions.eq("id", roleId));
-			output = (Roles) criteria.list().get(0);
-		} catch(HibernateException he) {
-			if(transaction != null) {
-				transaction.rollback();
-			}
-			System.out.println("Error checking existence of role");
-			he.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		return output;
-	}
 }

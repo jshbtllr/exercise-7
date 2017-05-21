@@ -60,14 +60,14 @@ public class RoleService {
 			if(RoleDAO.checkDuplicateRole(role, 1)){
 				System.out.println("Chosen RoleCode already exists. Exiting Role Update");
 			} else {
-				role = RoleDAO.getRoleDetails(roleId);
+				role = RoleDAO.get(Roles.class, roleId);
 				role.setRoleCode(roleCode);
 				RoleDAO.update(role);
 			}
 		} else if(option == 2) {
 			System.out.print("Input New RoleName: ");
 			roleName = InputUtil.getRequiredInput();
-			role = RoleDAO.getRoleDetails(roleId);
+			role = RoleDAO.get(Roles.class, roleId);
 			role.setRoleName(roleName);
 			RoleDAO.update(role);
 		} else if(option == 3) {
@@ -80,7 +80,7 @@ public class RoleService {
 			if(RoleDAO.checkDuplicateRole(role, 2)) {
 				System.out.println("Chosen RoleCode already exists. Exiting Role Update");
 			} else {
-				role = RoleDAO.getRoleDetails(roleId);
+				role = RoleDAO.get(Roles.class, roleId);
 				role.setRoleCode(roleCode);
 				role.setRoleName(roleName);
 				RoleDAO.update(role);
@@ -105,7 +105,8 @@ public class RoleService {
 		}
 
 		if (!(RoleDAO.checkDuplicateRole(role, 3))) {
-			RoleDAO.deleteRole(role);
+			role = RoleDAO.get(Roles.class, roleId);
+			RoleDAO.delete(role);
 			System.out.println("Role deleted");
 		} else {
 			System.out.println("Specified Role still belongs to an employee");

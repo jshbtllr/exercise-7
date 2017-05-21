@@ -21,8 +21,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name="Employee")
-public class Employee {
-	private Long id;
+public class Employee extends EmployeeRole {
 	private Person person;
 	private Address address;
 	private Float gradeWeightAverage;
@@ -41,12 +40,6 @@ public class Employee {
 		this.employed = employed;
 		this.contactInfo = contactInfo;
 		this.role = role;
-	}
-
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", unique=true, nullable=false)
-	public Long getId() {
-		return this.id;
 	}
 
 	@Embedded
@@ -91,10 +84,6 @@ public class Employee {
 		inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 	public Set <Roles> getRole() {
 		return this.role;
-	}
-
-	public void setId(Long input) {
-		this.id = input;
 	}
 
 	public void setPerson(Person input) {

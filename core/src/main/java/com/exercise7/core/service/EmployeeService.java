@@ -110,7 +110,7 @@ public class EmployeeService {
 			}
 		} while(option!= 2);
 
-		EmployeeDAO.addEmployee(employee);
+		EmployeeDAO.add(employee);
 	}
 
 	public static void listEmployees(Integer sortFunction, Integer orderFunction) {
@@ -195,9 +195,9 @@ public class EmployeeService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}
 
-		employee = EmployeeDAO.getEmployee(employeeId);
+		employee = EmployeeDAO.get(Employee.class, employeeId);
 
-		EmployeeDAO.deleteEmployee(employee);
+		EmployeeDAO.delete(employee);
 	}
 
 	public static void updateEmployee() {
@@ -228,7 +228,7 @@ public class EmployeeService {
 			employeeId = InputUtil.inputOptionCheck().longValue();
 		}	
 
-		Employee employee = EmployeeDAO.getEmployee(employeeId);
+		Employee employee = EmployeeDAO.get(Employee.class, employeeId);
 
 		System.out.println("Update Employee: ");
 		System.out.println("[1]    Full Name");
@@ -285,7 +285,7 @@ public class EmployeeService {
 				}
 			}	
 		}
-		EmployeeDAO.updateEmployee(employee);
+		EmployeeDAO.update(employee);
 	}
 }
 

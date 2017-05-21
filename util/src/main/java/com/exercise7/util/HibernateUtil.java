@@ -12,7 +12,7 @@ public class HibernateUtil {
 	private static SessionFactory buildSessionFactory() {
 		if(sessionFactory == null) {
 			AnnotationConfiguration configuration = new AnnotationConfiguration();
-			sessionFactory = configuration.configure("com/exercise7/infra/persistence/hibernate.cfg.xml").buildSessionFactory();
+			sessionFactory = configuration.configure().buildSessionFactory();
 		}
 		return sessionFactory;
 	}
