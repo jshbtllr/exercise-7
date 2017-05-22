@@ -45,6 +45,6 @@
 		<mapping class="com.exercise7.core.model.Address"/>
 		<mapping class="com.exercise7.core.model.Roles"/>
 		<mapping class="com.exercise7.core.model.ContactInfo"/>
-		<mapping class="com.exercise7.core.model.Person"/>
+		<mapping class="com.exercise7.core.model.Name"/>
 	</session-factory>
 </hibernate-configuration>

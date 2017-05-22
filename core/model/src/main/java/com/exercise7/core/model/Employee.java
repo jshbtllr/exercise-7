@@ -19,9 +19,10 @@ import java.util.Date;
 
 @Entity
 @Table(name="Employee")
-public class Employee extends EmployeeRole {
-	private Person person;
+public class Employee extends BaseEntity {
+	private Name name;
 	private Address address;
+	private Date birthday;
 	private Float gradeWeightAverage;
 	private Date hireDate;
 	private Boolean employed;
@@ -29,10 +30,11 @@ public class Employee extends EmployeeRole {
 	private Set <Roles> role;
 
 	public Employee() {}
-	public Employee(Person person, Address address, Float gradeWeightAverage, Date hireDate, Boolean employed, 
+	public Employee(Name name, Address address, Date birthday, Float gradeWeightAverage, Date hireDate, Boolean employed, 
 					Set <ContactInfo> contactInfo, Set <Roles> role) {
-		this.person = person;
+		this.name = name;
 		this.address = address;
+		this.birthday = birthday;
 		this.gradeWeightAverage = gradeWeightAverage;
 		this.hireDate = hireDate;
 		this.employed = employed;
@@ -41,13 +43,22 @@ public class Employee extends EmployeeRole {
 	}
 
 	@Embedded
-	public Person getPerson() {
-		return this.person;
+	public Name getName() {
+		return this.name;
 	}
 
 	@Embedded
 	public Address getAddress() {
 		return this.address;
+	}
+
+	@Column(name="birthday")
+	public Date getBirthday() {
+		return this.birthday;
+	}
+
+	public void setBirthday(Date input) {
+		this.birthday = input;
 	}
 
 	@Column(name="gwa")
@@ -84,8 +95,8 @@ public class Employee extends EmployeeRole {
 		return this.role;
 	}
 
-	public void setPerson(Person input) {
-		this.person = input;
+	public void setName(Name input) {
+		this.name = input;
 	}
 
 

@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name="ROLES")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
-public class Roles extends EmployeeRole {
+public class Roles extends BaseEntity {
 	
 	private String roleName;
 	private String roleCode;

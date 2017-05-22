@@ -5,22 +5,20 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Person {
+public class Name {
 	private String firstName;
 	private String lastName;
 	private String middleName;
 	private String suffix;
 	private String title;
-	private Date birthday;
 
-	public Person(){}
-	public Person(String firstName, String lastName, String middleName, String suffix, String title, Date birthday) {
+	public Name(){}
+	public Name(String firstName, String lastName, String middleName, String suffix, String title) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.middleName = middleName;
 		this.suffix = suffix;
 		this.title = title;
-		this.birthday = birthday;
 	}
 
 	@Column(name="first_name")
@@ -67,13 +65,4 @@ public class Person {
 	public void setTitle(String input) {
 		this.title = input;
 	}	
-
-	@Column(name="birthday")
-	public Date getBirthday() {
-		return this.birthday;
-	}
-
-	public void setBirthday(Date input) {
-		this.birthday = input;
-	}
 }

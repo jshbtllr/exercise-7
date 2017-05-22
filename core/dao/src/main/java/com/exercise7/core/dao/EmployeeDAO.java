@@ -35,9 +35,9 @@ public class EmployeeDAO extends GenericDAO {
 
 			if(sort == 1) {
 				if(order == 1) {
-					criteria.addOrder(Order.asc("employee.person.lastName"));
+					criteria.addOrder(Order.asc("employee.name.lastName"));
 				} else {
-					criteria.addOrder(Order.desc("employee.person.lastName"));
+					criteria.addOrder(Order.desc("employee.name.lastName"));
 				}
 			} else if(sort == 3) {
 				if(order == 1) {
@@ -132,8 +132,8 @@ public class EmployeeDAO extends GenericDAO {
 			if(option != 3) {
 				criteria = session.createCriteria(Employee.class, "employee");
 				ProjectionList projectionList = Projections.projectionList();
-				projectionList.add(Projections.property("employee.person.firstName"), "firstName");
-				projectionList.add(Projections.property("employee.person.lastName"), "lastName");
+				projectionList.add(Projections.property("employee.name.firstName"), "firstName");
+				projectionList.add(Projections.property("employee.name.lastName"), "lastName");
 				projectionList.add(Projections.property("gradeWeightAverage"), "gradeWeightAverage");
 				criteria.setProjection(projectionList);
 

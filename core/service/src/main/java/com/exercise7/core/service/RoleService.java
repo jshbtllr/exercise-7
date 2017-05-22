@@ -1,6 +1,5 @@
 package com.exercise7.core.service;
 import com.exercise7.core.model.Roles;
-import com.exercise7.core.model.Employee;
 import com.exercise7.util.InputUtil;
 import com.exercise7.core.dao.RoleDAO;
 import java.util.List;

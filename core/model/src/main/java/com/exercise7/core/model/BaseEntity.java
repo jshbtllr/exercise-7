@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 
 @MappedSuperclass
-public abstract class EmployeeRole {
+public abstract class BaseEntity {
 	private Long id;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
