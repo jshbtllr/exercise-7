@@ -1,2 +1,3 @@
-#Ignoring Target Folder
+#Ignoring Target Folder and Cache Folder
 target/
+cache/
