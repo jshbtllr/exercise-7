@@ -27,7 +27,7 @@
 		<commons-validator-version>1.6</commons-validator-version>
 		<hibernate-cache-provider>org.hibernate.cache.ehcache.EhCacheRegionFactory</hibernate-cache-provider>
 		<hibernate-ehcache-version>4.3.8.Final</hibernate-ehcache-version>
-		<buildtool-sql>src/main/java/com/exercise7/infra/buildtools/05_17_2017_01.sql</buildtool-sql>
+		<buildtool-sql>src/main/resources/05_17_2017_01.sql</buildtool-sql>
 	</properties>
 
 	<profiles>
@@ -64,22 +64,40 @@
 			</dependency>
 
 			<dependency>
-				<groupId>com.exercise7.infra</groupId>
-				<artifactId>infra</artifactId>
-				<version>${parent-version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>com.exercise7.util</groupId>
 				<artifactId>util</artifactId>
 				<version>${parent-version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.exercise7.core</groupId>
-				<artifactId>core</artifactId>
+				<groupId>com.exercise7.core.model</groupId>
+				<artifactId>model</artifactId>
 				<version>${parent-version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.exercise7.core.dao</groupId>
+				<artifactId>dao</artifactId>
+				<version>${parent-version}</version>
+			</dependency>		
+
+			<dependency>
+				<groupId>com.exercise7.core.service</groupId>
+				<artifactId>service</artifactId>
+				<version>${parent-version}</version>
+			</dependency>	
+
+			<dependency>
+				<groupId>com.exercise7.infra.persistence</groupId>
+				<artifactId>persistence</artifactId>
+				<version>${parent-version}</version>
+			</dependency>		
+
+			<dependency>
+				<groupId>com.exercise7.infra.buildtools</groupId>
+				<artifactId>core</artifactId>
+				<version>${parent-version}</version>
+			</dependency>							
 
 			<dependency>
 				<groupId>org.hibernate</groupId>

@@ -1,0 +1,36 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exercise7.core</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0.1</version>
+	</parent>
+
+	<groupId>com.exercise7.core.model</groupId>
+	<artifactId>model</artifactId>
+	<version>${parent-version}</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.exercise7.util</groupId>
+			<artifactId>util</artifactId>
+			<version>${parent-version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+		</plugins>		
+	</build>
+</project>

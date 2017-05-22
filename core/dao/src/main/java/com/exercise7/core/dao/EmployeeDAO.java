@@ -32,7 +32,6 @@ public class EmployeeDAO extends GenericDAO {
 		try {
 			transaction = session.beginTransaction();
 			criteria = session.createCriteria(Employee.class, "employee");
-			//criteria.createAlias
 
 			if(sort == 1) {
 				if(order == 1) {

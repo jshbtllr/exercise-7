@@ -1,0 +1,39 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exercise7.infra</groupId>
+		<artifactId>infra</artifactId>
+		<version>1.0.1</version>		
+	</parent>
+
+	<groupId>com.exercise7.infra.buildtools</groupId>
+	<artifactId>buildtools</artifactId>
+	<version>${parent-version}</version>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+        	<resource>
+            	<directory>src/main/resources</directory>
+            	<filtering>true</filtering>
+            	<includes>
+               		<include>**/*.sql</include>
+            	</includes>
+        	</resource>        	
+    	</resources>
+
+		<plugins>
+			<plugin>
+ 				<groupId>org.codehaus.mojo</groupId>
+ 				<artifactId>sql-maven-plugin</artifactId>
+ 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

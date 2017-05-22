@@ -3,29 +3,24 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.exercise7</groupId>
-		<artifactId>Employee-Annotation</artifactId>
+		<groupId>com.exercise7.core</groupId>
+		<artifactId>core</artifactId>
 		<version>1.0.1</version>
 	</parent>
 
-	<groupId>com.exercise7.util</groupId>
-	<artifactId>util</artifactId>
+	<groupId>com.exercise7.core.dao</groupId>
+	<artifactId>dao</artifactId>
 	<version>${parent-version}</version>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
+			<groupId>com.exercise7.util</groupId>
+			<artifactId>util</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.exercise7.infra.persistence</groupId>
-			<artifactId>persistence</artifactId>
+			<groupId>com.exercise7.core.model</groupId>
+			<artifactId>model</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -35,6 +30,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
 			</plugin>
 		</plugins>		
 	</build>

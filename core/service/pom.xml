@@ -1,0 +1,42 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.exercise7.core</groupId>
+		<artifactId>core</artifactId>
+		<version>1.0.1</version>
+	</parent>
+
+	<groupId>com.exercise7.core.service</groupId>
+	<artifactId>service</artifactId>
+	<version>${parent-version}</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.exercise7.core.dao</groupId>
+			<artifactId>dao</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+		</dependency>	
+
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+		</plugins>		
+	</build>
+</project>

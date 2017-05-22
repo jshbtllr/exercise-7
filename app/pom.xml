@@ -14,9 +14,19 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.exercise7.core</groupId>
-			<artifactId>core</artifactId>
+			<groupId>com.exercise7.core.service</groupId>
+			<artifactId>service</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.exercise7.core.model</groupId>
+			<artifactId>model</artifactId>
+		</dependency>		
+
+		<dependency>
+			<groupId>com.exercise7.core.dao</groupId>
+			<artifactId>dao</artifactId>
+		</dependency>		
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
